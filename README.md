@@ -1,12 +1,12 @@
-Inline Dropdown XBlock
+Inline Text and Dropdown XBlock
 =========================
-This XBlock provides a way to place dropdown questions inline with other text, for example, in a paragraph.  
+This XBlock provides a way to place text and dropdown questions inline with other text, for example, in a paragraph.
 
 ![Completed Question](docs/img/submitted.png)
 
 Installation
 ------------
-To install the Inline Dropdown XBlock within your edX python environment, simply run this command:
+To install the Inline Text and Dropdown XBlock within your edX python environment, simply run this command:
 
 ```bash
 $ pip install -r requirements.txt
@@ -14,21 +14,21 @@ $ pip install -r requirements.txt
 
 Enabling in Studio
 ------------------
-Go to `Settings -> Advanced Settings` and set `Advanced Module List` to `["inline-dropdown"]`.
+Go to `Settings -> Advanced Settings` and set `Advanced Module List` to `["inline-text-and-dropdown"]`.
 
 ![Advanced Module List](docs/img/policy.png)
 
 Usage
 ------------------
-Once the Inline Dropdown XBlock is enabled in Studio, you should see a new Component button labeled `Advanced`:
+Once the Inline Text and Dropdown XBlock is enabled in Studio, you should see a new Component button labeled `Advanced`:
 
 ![Component Buttons](docs/img/component.png)
 
-Click the `Advanced` button and you should see the Inline Dropdown XBlock listed:
+Click the `Advanced` button and you should see the Inline Text and Dropdown XBlock listed:
 
 ![Advanced Component List](docs/img/advanced.png)
 
-After you've selected the Inline Dropdown XBlock, a default question will be inserted into your unit:
+After you've selected the Inline Text and Dropdown XBlock, a default question will be inserted into your unit:
 
 ![Default Question](docs/img/student_view.png)
 
@@ -39,9 +39,9 @@ The question can be customized by clicking the `Edit` button on the component:
 ![Studio View](docs/img/studio_view1.png)
 ![Studio View](docs/img/studio_view2.png)
 
-The Inline Dropdown XBlock uses a simple XML-based structure as shown below:
+The Inline Text and Dropdown XBlock uses a simple XML-based structure as shown below:
 ```bash
-<inline_dropdown schema_version='1'>
+<inline_text_and_dropdown schema_version='1'>
     <body>
         <p>A fruit is the fertilized ovary of a tree or plant and contains seeds. Given this, a <input_ref input="i1"/> is consider a fruit, while a <input_ref input="i2"/> is considered a vegetable.</p>
     </body>
@@ -61,6 +61,6 @@ The Inline Dropdown XBlock uses a simple XML-based structure as shown below:
         <hint>A fruit is the fertilized ovary from a flower.</hint>
         <hint>A fruit contains seeds of the plant.</hint>
     </demandhint>
-</inline_dropdown>
+</inline_text_and_dropdown>
 ```
 
