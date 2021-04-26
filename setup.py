@@ -15,19 +15,19 @@ def package_data(pkg, root):
 
 
 setup(
-    name='xblock-inline-dropdown',
-    version='0.1',
-    description='Inline Dropdown XBlock',
+    name='xblock-inline-text-and-dropdown',
+    version='0.0.1',
+    description='Inline Text and Dropdown XBlock',
     packages=[
-        'inline_dropdown',
+        'inline_text_and_dropdown',
     ],
     install_requires=[
         'XBlock',
     ],
     entry_points={
         'xblock.v1': [
-            'inline-dropdown = inline_dropdown:InlineDropdownXBlock',
+            'inline-text-and-dropdown = inline_text_and_dropdown:InlineTextAndDropdownXBlock',
         ]
     },
-    package_data=package_data("inline_dropdown", "static"),
+    package_data=package_data("inline_text_and_dropdown", "static"),
 )
