@@ -146,6 +146,12 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
         help=_("Random seed for this student"),
         scope=Scope.user_state
     )
+    enable_advanced_editor = Boolean(
+        display_name=_('Enable Advanced Editor'),
+        help=_('If enabled - changes the editor to advanced mode with xml editing.'),
+        scope=Scope.settings,
+        default=False
+    )
     has_score = True
 
     """
@@ -178,7 +184,10 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
         The secondary view of the XBlock, shown to teachers when editing the XBlock.
         """
         xml_data = self.question_string
-        markdown_data = XmlParser().convert_to_markdown(xml_data)
+        markdown_data = ''
+
+        if not self.enable_advanced_editor:
+            markdown_data = XmlParser().convert_to_markdown(xml_data)
 
         context = {
             'display_name': self.display_name,
@@ -186,13 +195,15 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
             'randomize': self.randomize,
             'show_correctness': self.show_correctness,
             'show_reset_button': self.show_reset_button,
-            'xml_data': markdown_data if markdown_data else self.question_string,
+            'enable_advanced_editor': self.enable_advanced_editor,
+            'xml_data': xml_data if self.enable_advanced_editor else markdown_data,
         }
 
         frag = Fragment()
         frag.add_content(loader.render_django_template('static/html/inline_text_and_dropdown_edit.html',
                                                        context=context,
                                                        i18n_service=self.i18n_service))
+        frag.add_css(self.resource_string('static/css/inline_text_and_dropdown_edit.css'))
         frag.add_javascript(self.load_resource('static/js/inline_text_and_dropdown_edit.js'))
         frag.initialize_js('InlineTextAndDropdownXBlockInitEdit')
         return frag
@@ -310,13 +321,15 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
             weight = 0
         if weight > 0:
             self.weight = weight
-        xml_content = submissions['data']
+        content = submissions['data']
 
-        xml_text = XmlParser().convert_to_xml(xml_content)
+        if not self.enable_advanced_editor:
+            content = XmlParser().convert_to_xml(content)
+        self.enable_advanced_editor = submissions['enable_advanced_editor']
 
         try:
-            etree.parse(StringIO(xml_text))
-            self.question_string = xml_text
+            etree.parse(StringIO(content))
+            self.question_string = content
         except etree.XMLSyntaxError as e:
             return {
                 'result': 'error',

@@ -39,11 +39,35 @@ The question can be customized by clicking the `Edit` button on the component:
 ![Studio View](docs/img/studio_view1.png)
 ![Studio View](docs/img/studio_view2.png)
 
-The Inline Text and Dropdown XBlock uses a simple XML-based structure as shown below:
+Default mode editing
+![Studio View](docs/img/studio_view_default.png)
+
+Advanced mode editing
+![Studio View](docs/img/studio_view_advanced.png)
+
+Markdown
+-------------
+The Inline Text and Dropdown XBlock in default mode uses a simple Markdown-based structure as shown below:
+```bash
+A fruit is the fertilized ovary of a tree or plant and contains seeds. Given this, a [[(tomato), potato]] is consider a fruit,
+while a [[cucumber, (onion)]] is considered a vegetable. This text field should be field
+with the correct answer [= the correct answer or= optional acceptable variant of the correct answer or= correct] and submitted.
+[demandhint]Text hint.[demandhint]
+
+
+```
+and the next syntax for markdown view:
+ * `[[(correct value), value]]` is used for dropdown;
+ * `[= the correct answer or= alternative answer]` is used for text inputs;
+ * `[demandhint]Hint that will be displayed[demandhint]` is used to display hints if necessary.
+
+Advanced Mode
+-------------
+The Inline Text and Dropdown XBlock in advanced mode uses a simple XML-based structure as shown below:
 ```bash
 <inline_text_and_dropdown schema_version='1'>
     <body>
-        <p>A fruit is the fertilized ovary of a tree or plant and contains seeds. Given this, a <input_ref input="i1"/> is consider a fruit, while a <input_ref input="i2"/> is considered a vegetable.</p>
+        <p>A fruit is the fertilized ovary of a tree or plant and contains seeds. Given this, a <input_ref input="i1"/> is consider a fruit, while a <input_ref input="i2"/> is considered a vegetable. This text field should be field with the correct answer <input_ref input="i3"/> and submitted.</p>
     </body>
     <optionresponse>
        	<optioninput id="i1">
@@ -57,6 +81,10 @@ The Inline Text and Dropdown XBlock uses a simple XML-based structure as shown b
        		<option correct="True">onion<optionhint>The onion is the bulb of the onion plant and contains no seeds and is therefore a vegetable.</optionhint></option>
        	</optioninput>
     </optionresponse>
+    <stringresponse answer="the correct answer" id="i3">
+        <additional_answer answer="optional acceptable variant of the correct answer"/>
+        <additional_answer answer="correct"/>
+    </stringresponse>
     <demandhint>
         <hint>A fruit is the fertilized ovary from a flower.</hint>
         <hint>A fruit contains seeds of the plant.</hint>
