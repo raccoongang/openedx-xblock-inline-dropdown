@@ -56,7 +56,7 @@ class XmlParser:
         if demand_hints:
             self.add_hints_to_xml(root, demand_hints)
 
-        return etree.tostring(root, encoding='unicode')
+        return etree.tostring(root, pretty_print=True, encoding='unicode')
 
     def convert_to_markdown(self, xml_data):
         """
