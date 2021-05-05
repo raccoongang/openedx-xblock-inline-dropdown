@@ -12,9 +12,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
 
       $mainDiv = $element.find('.inline-text-and-dropdown'),
 
-      $submitButton = $element.find('.submit'),
       $hintButton = $element.find('.hint-button'),
-      $resetButton = $element.find('.reset'),
 
       $problemProgress = $element.find('.problem-progress'),
       $questionPrompt = $element.find('.question-prompt'),
@@ -91,6 +89,10 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
       if (this.getAttribute('xblock_id') === xblockId) {
         // reset the answer value to what the student submitted
         this.value = answers[this.getAttribute('input')];
+
+        if($(this).is('input')) {
+          setInputWidth(this);
+        }
       }
     });
   }
@@ -144,6 +146,10 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
       data: JSON.stringify({requested: true}),
       success: restoreState
     });
+
+    $questionPrompt.find('input').on('keyup', function () {
+      setInputWidth(this);
+    });
   }
 
   function restoreState(result) {
@@ -164,6 +170,10 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
   function resetPrompt() {
     $questionPrompt.html(prompt);
     addChangeListener();
+
+    $questionPrompt.find('input').on('keyup', function () {
+      setInputWidth(this);
+    });
   }
 
   function resetHint() {
@@ -267,5 +277,14 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
       var $xblockContainer = $(e.currentTarget).closest('.inline-text-and-dropdown');
       toggleSubmitButton($xblockContainer);
     });
-  };
+  }
+
+  function setInputWidth(el) {
+    var $this = $(el),
+      symbolsCount = $this.val().length,
+      additionalSpace = 2,
+      averageSymbolWidth = 8;
+
+    $this.css('width', (symbolsCount + additionalSpace) * averageSymbolWidth);
+  }
 }

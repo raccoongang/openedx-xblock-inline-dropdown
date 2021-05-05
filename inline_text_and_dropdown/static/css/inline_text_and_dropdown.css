@@ -1,3 +1,67 @@
+.xblock-studio_view-inline-text-and-dropdown .content {
+  max-width: 100%;
+}
+
+.xblock-studio_view-inline-text-and-dropdown .editor-with-buttons {
+  margin-bottom: 0;
+}
+
+.modal-type-inline-text-and-dropdown.modal-lg.modal-editor .modal-content {
+  overflow: visible;
+}
+
+.xblock-studio_view-inline-text-and-dropdown .list-input.settings-list .field.comp-setting-entry:last-child {
+  padding-bottom: 20px;
+}
+
+.xblock-studio_view-inline-text-and-dropdown .editor-list {
+  padding: 0 10px;
+}
+
+.xblock-studio_view-inline-text-and-dropdown .xblock-actions {
+  box-sizing: border-box;
+}
+
+.xblock-studio_view-inline-text-and-dropdown .editor-list .CodeMirror {
+  height: 342px;
+}
+
+.modal-type-inline-text-and-dropdown .action-list {
+  display: flex;
+  padding: 8px 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  position: absolute;
+  top: -49px;
+  z-index: 4;
+  right: 0;
+}
+
+.modal-type-inline-text-and-dropdown .action-item {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.modal-type-inline-text-and-dropdown .mode-button {
+  border: 0;
+  color: #666;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  line-height: 2.072rem;
+  border-radius: 4px;
+}
+
+.modal-type-inline-text-and-dropdown .mode-button.is-set {
+  background-color: #666;
+  color: #fff;
+}
+
+.modal-type-inline-text-and-dropdown .mode-button:hover {
+  background: #ccc;
+  color: #4c4c4c;
+}
+
 .inline-text-and-dropdown .question-prompt {
   text-align: left;
   padding-bottom: 20px;
@@ -112,7 +176,18 @@
 
 .inline-text-and-dropdown input {
   margin: 1px;
-  min-width: 160px;
+  min-width: 25px;
+  width: 25px;
+  max-width: 110px;
+  font-size: 15px;
+  padding: 2px 5px;
+  border-radius: 2px !important;
+  border: 1px solid #767676;
+}
+
+.inline-text-and-dropdown .question-prompt select {
+  height: 26px !important;
+  border-radius: 2px !important;
 }
 
 .inline-text-and-dropdown .notification.general {
