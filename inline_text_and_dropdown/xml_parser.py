@@ -36,7 +36,7 @@ class XmlParser:
 
         # Create xml
         root = Element('inline_text_and_dropdown')
-        root.set('schema_version', '1.0')
+        root.set('schema_version', '1')
         body = SubElement(root, 'body')
 
         # Form input tag according to id and add problems xml to the root
@@ -137,16 +137,18 @@ class XmlParser:
         """
         Build xml part for body.
         """
+        tag_index = 0
+        tail_index = 1
         for el in separated_data:
             p_tag = [i for i in re.split('(<input_ref[^<]*)', el) if i]
             if p_tag:
                 for value in p_tag:
                     if value.startswith('<input_ref'):
-                        tag, tail = [i for i in re.split('(<[^>]*>)', value) if i]
-                        input_id = problems.get(tag)
+                        text_with_tag = [i for i in re.split('(<[^>]*>)', value) if i]
+                        input_id = problems.get(text_with_tag[tag_index])
                         if input_id:
                             input_ref = SubElement(p, 'input_ref', input=input_id)
-                            input_ref.tail = tail
+                            input_ref.tail = text_with_tag[tail_index] if len(text_with_tag) > 1 else None
                         continue
                     p = SubElement(body, 'p')
                     p.text = value
