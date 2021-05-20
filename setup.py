@@ -16,7 +16,7 @@ def package_data(pkg, root):
 
 setup(
     name='xblock-inline-text-and-dropdown',
-    version='0.0.3',
+    version='0.0.4',
     description='Inline Text and Dropdown XBlock',
     packages=[
         'inline_text_and_dropdown',

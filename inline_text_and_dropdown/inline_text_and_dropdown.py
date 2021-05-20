@@ -48,9 +48,9 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
         help=_('Default question content '),
         scope=Scope.content,
         default=textwrap.dedent("""
-            <inline_text_and_dropdown schema_version='1'>
+            <inline_text_and_dropdown schema_version="1">
                 <body>
-                    <p>A fruit is the fertilized ovary of a tree or plant and contains seeds. Given this, a <input_ref input="i1"/> is consider a fruit, while a <input_ref input="i2"/> is considered a vegetable. This text field should be field with the correct answer <input_ref input="i3"/> and submitted.</p>
+                    <p>A fruit is the fertilized ovary of a tree or plant and contains seeds. Given this, a <input_ref input="i1"/> is consider a fruit, while a <input_ref input="i2"/> is considered a vegetable. This text field should be filled with the correct answer <input_ref input="i3"/> and submitted.</p>
                 </body>
                 <optionresponse>
                 	<optioninput id="i1">
