@@ -169,8 +169,8 @@ msgstr "Відправлення на перевірку"
 
 #: inline_text_and_dropdown/static/html/inline_text_and_dropdown_view.html:18
 #: inline_text_and_dropdown/static/html/inline_text_and_dropdown_view.html:19
-msgid "Submit"
-msgstr "Надіслати"
+msgid "Submit answer"
+msgstr ""
 
 #: inline_text_and_dropdown/static/html/inline_text_and_dropdown_view.html:25
 #: inline_text_and_dropdown/static/html/inline_text_and_dropdown_view.html:27
