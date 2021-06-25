@@ -13,6 +13,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
       $mainDiv = $element.find('.inline-text-and-dropdown'),
 
       $hintButton = $element.find('.hint-button'),
+      $submitButton = $element.find('.submit'),
 
       $problemProgress = $element.find('.problem-progress'),
       $questionPrompt = $element.find('.question-prompt'),
@@ -78,6 +79,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
       showFeedback('<span class="icon fa fa-info-circle" aria-hidden="true"></span>\n' +
         '<span class="notification-message" aria-describedby="problem-title">' + gettext(result.feedback) + '</span>');
     }
+    disableSubmitButton();
     resetHint();
     resetPrompt(prompt);
     restoreAnswers(result.submissions);
@@ -181,6 +183,10 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
     $hintDiv.css('display', 'none');
   }
 
+  function disableSubmitButton() {
+    $submitButton.attr('disabled', 'true');
+  }
+
   function resetFeedback() {
     $feedbackDiv.html();
     $feedbackDiv.css('display', 'none');
@@ -206,7 +212,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
     $feedbackDiv.css('display', 'block');
   }
 
-  $('.submit', element).click(function(eventObject) {
+  $submitButton.on('click', function() {
     preSubmit();
     var answers = {};
     var answersOrder = {};
