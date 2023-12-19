@@ -1,5 +1,6 @@
 """ Inline Text and Dropdown XBlock main Python class"""
 
+import logging
 import random
 import textwrap
 from io import StringIO
@@ -15,10 +16,11 @@ from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Float, Integer, List, Scope, String
 from xblockutils.resources import ResourceLoader
 from xblockutils.settings import ThemableXBlockMixin, XBlockWithSettingsMixin
+from xmodule.progress import Progress
 
 from inline_text_and_dropdown.xml_parser import XmlParser
 
-
+log = logging.getLogger(__name__)
 loader = ResourceLoader(__name__)
 
 
@@ -548,6 +550,27 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
                     break
 
         return correct_answer
+
+    def get_progress(self):
+        """
+        Get weighted earned / weighted possible scores.
+        """
+        weighted_earned = self.score
+        weighted_possible = self.weight
+
+        if weighted_possible:
+            try:
+                return Progress(weighted_earned, weighted_possible)
+            except (TypeError, ValueError):
+                log.exception('Got bad progress.')
+
+        return
+
+    def is_attempted(self):
+        """
+        Has assignment been submitted?
+        """
+        return self.completed
 
     @property
     def i18n_service(self):
