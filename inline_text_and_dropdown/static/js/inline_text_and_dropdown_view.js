@@ -27,7 +27,9 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
 
       prompt = $questionPrompt.html(),
 
-      xblockId = '';
+      xblockId = '',
+      uniqueSubmissionKey = null,
+      savedAnswers = null;
 
   $.ajax({
     type: 'POST',
@@ -82,8 +84,10 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
     disableSubmitButton();
     resetHint();
     resetPrompt(prompt);
+    savedAnswers = result.submissions;
     restoreAnswers(result.submissions);
     addDecorations(result.correctness, result.answers_order);
+    sessionStorage.removeItem(uniqueSubmissionKey);
   }
 
   function restoreAnswers(answers) {
@@ -140,6 +144,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
 
   function setXblockId(result) {
     xblockId = result.xblock_id;
+    uniqueSubmissionKey = `${result.user_id}:${handlerUrl}`
     showResetButton();
     addChangeListener();
     $.ajax({
@@ -159,6 +164,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
         $showCorrectness = $xblock.data('show-correctness'),
         currentFeedback;
     if (result.completed) {
+      savedAnswers = result.answers;
       restoreAnswers(result.answers);
       addDecorations(result.correctness, result.answers_order);
       currentFeedback = $showCorrectness ? result.current_feedback :
@@ -212,8 +218,7 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
     $feedbackDiv.css('display', 'block');
   }
 
-  $submitButton.on('click', function() {
-    preSubmit();
+  function getStateToSubmit() {
     var answers = {};
     var answersOrder = {};
     var complete = true;
@@ -229,11 +234,21 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
         counter++;
       }
     });
-    var data = {
+    return {
       answers: answers,
-      answers_order: answersOrder,
+      answersOrder: answersOrder,
+      complete: complete,
+    }
+  }
+
+  $submitButton.on('click', function() {
+    preSubmit();
+    state = getStateToSubmit();
+    var data = {
+      answers: state.answers,
+      answers_order: state.answersOrder,
     };
-    if (complete) {
+    if (state.complete) {
       $.ajax({
         type: 'POST',
         url: handlerUrl,
@@ -271,10 +286,22 @@ function InlineTextAndDropdownXBlockInitView(runtime, element) {
   }
 
   function toggleSubmitButton($container) {
+    $container.find('.submit').prop('disabled', true);
+
     if(isFormFilled($container)) {
-      $container.find('.submit').prop('disabled', false);
-    } else {
-      $container.find('.submit').prop('disabled', true);
+      var state = getStateToSubmit(),
+          currentAnswers = state.answers,
+          areSavedAnswers = !!savedAnswers && Object.keys(savedAnswers).every(function(key) {
+            return savedAnswers[key] === currentAnswers[key];
+          });
+      if (!areSavedAnswers) {
+        var payload = {
+          answers: currentAnswers,
+          answers_order: state.answersOrder,
+        };
+        $container.find('.submit').prop('disabled', false);
+        sessionStorage.setItem(uniqueSubmissionKey, JSON.stringify(payload));
+      }
     }
   }
 

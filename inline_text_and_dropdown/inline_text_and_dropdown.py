@@ -347,6 +347,7 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
         return {
             'result': 'success',
             'xblock_id': str(self.scope_ids.usage_id),
+            'user_id': self.scope_ids.user_id,
         }
 
     @XBlock.json_handler
