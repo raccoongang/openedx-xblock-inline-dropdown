@@ -16,7 +16,6 @@ from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Float, Integer, List, Scope, String
 from xblockutils.resources import ResourceLoader
 from xblockutils.settings import ThemableXBlockMixin, XBlockWithSettingsMixin
-from xmodule.block_titling import TitledXBlockMixin
 from xmodule.progress import Progress
 
 from inline_text_and_dropdown.xml_parser import XmlParser
@@ -26,7 +25,7 @@ loader = ResourceLoader(__name__)
 
 
 @XBlock.needs('i18n')
-class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBlockMixin, TitledXBlockMixin):
+class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBlockMixin):
     """
     Icon of the XBlock. Values : [other (default), video, problem]
     """
@@ -169,7 +168,7 @@ class InlineTextAndDropdownXBlock(XBlock, XBlockWithSettingsMixin, ThemableXBloc
 
         attributes = ''
         context = {
-            'title': self.title_with_default,
+            'display_name': self.display_name,
             'problem_progress': problem_progress,
             'attributes': attributes,
             'show_correctness': self.show_correctness,
